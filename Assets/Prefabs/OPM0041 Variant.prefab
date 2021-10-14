@@ -1,31 +1,67 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+<<<<<<< Updated upstream
 --- !u!65 &-6733862360579633514
+=======
+--- !u!54 &-5703440988391815116
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695898555451724420}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &-2991186832049852423
+>>>>>>> Stashed changes
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 560320859596880903}
+=======
+  m_GameObject: {fileID: 4695898555451724420}
+>>>>>>> Stashed changes
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.006, y: 0.005999999, z: 0.0018506154}
   m_Center: {x: 0, y: 0, z: 0.0009253077}
+<<<<<<< Updated upstream
 --- !u!114 &-2907325203652777510
+=======
+--- !u!114 &371414431751013998
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_GameObject: {fileID: 560320859596880903}
+=======
+  m_GameObject: {fileID: 4695898555451724420}
+>>>>>>> Stashed changes
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bef1bb8f33a33a442998d6484a6a4549, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 --- !u!1001 &794816114399789398
+=======
+--- !u!1001 &5614377997352398805
+>>>>>>> Stashed changes
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -86,8 +122,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d3a0771c6c261a4db0c02fb6d0e5810, type: 3}
+<<<<<<< Updated upstream
 --- !u!1 &560320859596880903 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d3a0771c6c261a4db0c02fb6d0e5810, type: 3}
   m_PrefabInstance: {fileID: 794816114399789398}
+=======
+--- !u!1 &4695898555451724420 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7d3a0771c6c261a4db0c02fb6d0e5810, type: 3}
+  m_PrefabInstance: {fileID: 5614377997352398805}
+>>>>>>> Stashed changes
   m_PrefabAsset: {fileID: 0}

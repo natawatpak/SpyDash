@@ -16,10 +16,21 @@ public class Playercontrol : MonoBehaviour
 
     public GameObject obstacle;
     private float spawn_time = 3;
+<<<<<<< Updated upstream
     public Rigidbody rigid;
+=======
+    public GameObject rigid;
+    public int canSpawn = 0;
+    private float save_x;
+    private float save_y;
+    private float save_z;
+>>>>>>> Stashed changes
 
     void Start()
     {
+        save_x = rigid.transform.position.x;
+        save_y = rigid.transform.position.y;
+        save_z = rigid.transform.position.z;
         Debug.Log("Start");
         anim = GetComponent<Animator>();
     }
@@ -36,11 +47,47 @@ public class Playercontrol : MonoBehaviour
     }
 
     private void CreateObs(){
+<<<<<<< Updated upstream
         float xpos = rigid.position.x;
         float ypos = rigid.position.y;
         float zpos = rigid.position.z;
         for (int i = 0; i < 3; i++) {
             Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-3f, 3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(3f, 10f)), this.transform.rotation);
+=======
+        float xpos = rigid.transform.position.x;
+        float ypos = rigid.transform.position.y;
+        float zpos = rigid.transform.position.z;
+        for (int i = 0; i < 3; i++) {
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-3f, 3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(3f, 10f)), this.transform.rotation);
+
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (rigid.transform.position.x == save_x && rigid.transform.position.z == save_z ){
+            //Debug.Log("cant spawn");
+            canSpawn = 0;
+        }else{
+            //Debug.Log("can spawn");
+            canSpawn = 1;
+            save_x = rigid.transform.position.x;
+            save_y = rigid.transform.position.y;
+            save_z = rigid.transform.position.z;
+        }
+        if (canSpawn == 1 && spawn_time >= 0){
+            spawn_time -= Time.deltaTime;
+        }
+        
+        if (spawn_time <= 0 && canSpawn == 1) {
+            CreateObs();
+            spawn_time = 5;
+        }
+
+        if (!waiting){
+            if(_playerControl.Player.forward.ReadValue<float>() > 0){
+>>>>>>> Stashed changes
 
         }
     }
@@ -130,6 +177,12 @@ public class Playercontrol : MonoBehaviour
             }else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Ninja Idle")){
                 waiting = false;
             }
+<<<<<<< Updated upstream
         }
+=======
+
+        //Debug.Log(rotation);
+        
+>>>>>>> Stashed changes
     }
 }
