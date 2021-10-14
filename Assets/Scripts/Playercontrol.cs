@@ -14,11 +14,14 @@ public class Playercontrol : MonoBehaviour
 
     private float rotation = 360f;
 
+    public GameObject obstacle;
+    private float spawn_time = 3;
+    public Rigidbody rigid;
+
     void Start()
     {
         Debug.Log("Start");
         anim = GetComponent<Animator>();
-
     }
     private void Awake(){
         _playerControl = new MyControl();
@@ -32,9 +35,26 @@ public class Playercontrol : MonoBehaviour
         _playerControl.Disable();
     }
 
+    private void CreateObs(){
+        float xpos = rigid.position.x;
+        float ypos = rigid.position.y;
+        float zpos = rigid.position.z;
+        for (int i = 0; i < 3; i++) {
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-3f, 3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(3f, 10f)), this.transform.rotation);
+
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
+        spawn_time -= Time.deltaTime;
+        if (spawn_time <= 0) {
+            CreateObs();
+            spawn_time = 5;
+        }
+
         if(_playerControl.Player.forward.ReadValue<float>() > 0){
             
             anim.SetInteger("State", 1);
