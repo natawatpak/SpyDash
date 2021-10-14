@@ -57,6 +57,14 @@ public class @MyControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""climb"",
+                    ""type"": ""Button"",
+                    ""id"": ""16e58f09-4f6a-4483-8b91-2aefd8546600"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -114,6 +122,17 @@ public class @MyControl : IInputActionCollection, IDisposable
                     ""action"": ""jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1474327b-9918-41d3-b900-6bcd78ea4dc3"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""climb"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -127,6 +146,7 @@ public class @MyControl : IInputActionCollection, IDisposable
         m_Player_left = m_Player.FindAction("left", throwIfNotFound: true);
         m_Player_right = m_Player.FindAction("right", throwIfNotFound: true);
         m_Player_jump = m_Player.FindAction("jump", throwIfNotFound: true);
+        m_Player_climb = m_Player.FindAction("climb", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -181,6 +201,7 @@ public class @MyControl : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_left;
     private readonly InputAction m_Player_right;
     private readonly InputAction m_Player_jump;
+    private readonly InputAction m_Player_climb;
     public struct PlayerActions
     {
         private @MyControl m_Wrapper;
@@ -190,6 +211,7 @@ public class @MyControl : IInputActionCollection, IDisposable
         public InputAction @left => m_Wrapper.m_Player_left;
         public InputAction @right => m_Wrapper.m_Player_right;
         public InputAction @jump => m_Wrapper.m_Player_jump;
+        public InputAction @climb => m_Wrapper.m_Player_climb;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -214,6 +236,9 @@ public class @MyControl : IInputActionCollection, IDisposable
                 @jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @climb.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimb;
+                @climb.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimb;
+                @climb.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnClimb;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -233,6 +258,9 @@ public class @MyControl : IInputActionCollection, IDisposable
                 @jump.started += instance.OnJump;
                 @jump.performed += instance.OnJump;
                 @jump.canceled += instance.OnJump;
+                @climb.started += instance.OnClimb;
+                @climb.performed += instance.OnClimb;
+                @climb.canceled += instance.OnClimb;
             }
         }
     }
@@ -244,5 +272,6 @@ public class @MyControl : IInputActionCollection, IDisposable
         void OnLeft(InputAction.CallbackContext context);
         void OnRight(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnClimb(InputAction.CallbackContext context);
     }
 }

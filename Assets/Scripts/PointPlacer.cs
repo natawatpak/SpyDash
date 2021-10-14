@@ -63,11 +63,13 @@ public class PointPlacer : MonoBehaviour
             if (arRaycastmng.Raycast(touchposition, hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes)) {
                 var hitpose = hits[0].pose;
                 //startpoint = Instantiate(objectospawn1, hitpose.position, hitpose.rotation);
+
                 //code to disable planemanager and planes
                 //foreach(var plane in arPlaneManager.trackables) {
                 //    plane.gameObject.SetActive(false);
                 //}
                 //arPlaneManager.enabled = false;
+                
                 if (placedstartpoint == true && nextstage == false) {
                     startpoint.transform.SetPositionAndRotation(hitpose.position, hitpose.rotation);
                 } else if(placedstartpoint == false && nextstage == false) {

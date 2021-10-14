@@ -8,6 +8,7 @@ public class wallClaim : MonoBehaviour
     public GameObject player;
     private CharacterController controller;
     private Vector3 playervec;
+    [SerializeField] private LayerMask layerMsk;
     [SerializeField] private float playerspd = 5f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.8f;
@@ -77,15 +78,17 @@ public class wallClaim : MonoBehaviour
         {
             // Vector3 fwd = transform.TransformDirection(Vector3.forward);
             // int layer = 1 << 3;
-            int layerMask = 1 << 3;
-            layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position, fwd, out hit,  Mathf.Infinity, layerMask)){
-                // playervec.y = Mathf.Sqrt(3f * -2.0f * gravityValue);
-                Debug.Log(hit.collider.tag);
-                Debug.Log(hit.collider.gameObject.layer);
+            //int layerMask = 1 << 3;
+            //layerMask = ~layerMask;
+            if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit,  Mathf.Infinity, layerMsk)){
+                Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
+                if (hit.collider.tag == "wall"){
+                    float tall = hit.collider.bounds.size.y;
+                    playervec.y = Mathf.Sqrt(tall * -2.0f * gravityValue);
+                }
             }
-            Debug.Log(fwd);
-            Debug.Log(transform.position);
+            //Debug.Log(fwd);
+            Debug.Log(transform.forward);
         }
 
         playervec.y += gravityValue * Time.deltaTime;
