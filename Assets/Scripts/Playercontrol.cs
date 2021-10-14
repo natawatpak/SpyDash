@@ -17,6 +17,7 @@ public class Playercontrol : MonoBehaviour
     public GameObject obstacle;
     private float spawn_time = 3;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     public Rigidbody rigid;
 =======
     public GameObject rigid;
@@ -24,6 +25,20 @@ public class Playercontrol : MonoBehaviour
     private float save_x;
     private float save_y;
     private float save_z;
+>>>>>>> Stashed changes
+=======
+    public Rigidbody rigid;
+
+
+    ///////////////////////////////////////////
+
+    private Vector3 playervec;
+    [SerializeField] private LayerMask layerMsk;
+    [SerializeField] private float playerspd = 5f;
+    [SerializeField] private float jumpHeight = 1.0f;
+    [SerializeField] private float gravityValue = -9.8f;
+    [SerializeField] private float turnSpd = 180f;
+    [SerializeField] private bool grounded;
 >>>>>>> Stashed changes
 
     void Start()
@@ -47,6 +62,7 @@ public class Playercontrol : MonoBehaviour
     }
 
     private void CreateObs(){
+<<<<<<< Updated upstream
 <<<<<<< Updated upstream
         float xpos = rigid.position.x;
         float ypos = rigid.position.y;
@@ -85,6 +101,27 @@ public class Playercontrol : MonoBehaviour
             spawn_time = 5;
         }
 
+=======
+            float xpos = rigid.position.x;
+            float ypos = rigid.position.y;
+            float zpos = rigid.position.z;
+            for (int i = 0; i < 3; i++) {
+                Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-3f, 3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(3f, 10f)), this.transform.rotation);
+
+            }
+    }
+
+
+    // Update is called once per frame
+    void Update()
+    {
+        spawn_time -= Time.deltaTime;
+        if (spawn_time <= 0) {
+            CreateObs();
+            spawn_time = 5;
+        }
+        
+>>>>>>> Stashed changes
         if (!waiting){
             if(_playerControl.Player.forward.ReadValue<float>() > 0){
 >>>>>>> Stashed changes

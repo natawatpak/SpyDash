@@ -7,30 +7,21 @@ public class ObstacleAnimation : MonoBehaviour
     private float timeAnimate = 1;
     private int goup = 0;
     private float timeWait = 2;
-<<<<<<< Updated upstream
-=======
     //public GameObject playerChar;
     
->>>>>>> Stashed changes
     // Start is called before the first frame update
     void Start()
     {
         transform.Rotate(-90,0,0);
-<<<<<<< Updated upstream
-=======
         
         
->>>>>>> Stashed changes
     }
 
     // Update is called once per frame
     void Update()
     {
-<<<<<<< Updated upstream
-=======
         
 
->>>>>>> Stashed changes
         if (timeAnimate >= 0 && goup == 0) {
             
             transform.position = new Vector3(transform.position.x, transform.position.y + (float)0.005, transform.position.z);
@@ -61,24 +52,12 @@ public class ObstacleAnimation : MonoBehaviour
         if (transform.position.y <= (float)-1.341) {
             goup = 0;
         }
-<<<<<<< Updated upstream
-=======
         
->>>>>>> Stashed changes
 
     }
 
     private void OnCollisionEnter(Collision collision) {
         Debug.Log("eiei");
-<<<<<<< Updated upstream
-        // if (collision.gameObject.tag == "obstacle") {
-        //     Debug.Log("hi");
-        //     Destroy(collision.gameObject);
-        // } 
-    }
-
-}
-=======
         if (collision.gameObject.tag == "floortag")
         {
             Debug.Log("hi floor");
@@ -96,4 +75,3 @@ public class ObstacleAnimation : MonoBehaviour
     }
 
 }
->>>>>>> Stashed changes
