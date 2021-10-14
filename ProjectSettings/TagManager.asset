@@ -4,17 +4,17 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - obstacle
+  - wall
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - avoid
   - Water
   - UI
   - 
   - 
-  - 
+  - test
   - 
   - 
   - 

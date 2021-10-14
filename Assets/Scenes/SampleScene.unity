@@ -445,7 +445,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 413367952}
         m_TargetAssemblyTypeName: PointPlacer, Assembly-CSharp
         m_MethodName: button
         m_Mode: 1

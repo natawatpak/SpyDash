@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
+using UnityEngine.InputSystem;
 [RequireComponent(typeof(ARRaycastManager))]
 public class PointPlacer : MonoBehaviour
 {
+    private Screencontrol screencontrol;
     private GameObject startpoint;
     private GameObject endpoint;
     //public GameObject Butt;
@@ -19,22 +21,35 @@ public class PointPlacer : MonoBehaviour
 
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     // Start is called before the first frame update
+    void Awake()
+    {
+        screencontrol = new Screencontrol();
+        arRaycastmng = GetComponent<ARRaycastManager>();
+        arPlaneManager = GetComponent<ARPlaneManager>();    
+    }
+    private void OnEnable() {
+        screencontrol.Enable();
+    }
+
+    private void OnDisable() {
+        screencontrol.Disable();
+    }
     void Start()
     {
-        arRaycastmng = GetComponent<ARRaycastManager>();
-        arPlaneManager = GetComponent<ARPlaneManager>();
+
     }
     public void button() {
         nextstage = true;
     }
     bool gettouchpos(out Vector2 touchposition) {
-        if(Input.touchCount > 0) {
-            touchposition = Input.GetTouch(0).position;
+        if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
+            touchposition = screencontrol.Touch.TouchPosition.ReadValue<Vector2>();
             return true;
+            
         }
         touchposition = default;
         return false;
-
+        
     }
 
     // Update is called once per frame
@@ -44,17 +59,15 @@ public class PointPlacer : MonoBehaviour
             return;
         }
 
-        if(Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Began) {
+        if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
             if (arRaycastmng.Raycast(touchposition, hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes)) {
                 var hitpose = hits[0].pose;
-                
                 //startpoint = Instantiate(objectospawn1, hitpose.position, hitpose.rotation);
                 //code to disable planemanager and planes
                 //foreach(var plane in arPlaneManager.trackables) {
                 //    plane.gameObject.SetActive(false);
                 //}
                 //arPlaneManager.enabled = false;
-
                 if (placedstartpoint == true && nextstage == false) {
                     startpoint.transform.SetPositionAndRotation(hitpose.position, hitpose.rotation);
                 } else if(placedstartpoint == false && nextstage == false) {
