@@ -76,7 +76,7 @@ public class Playercontrol : MonoBehaviour
                     running = true;
                     Vector3 move = mother.transform.forward * _playerControl.Player.forward.ReadValue<float>();
                     mother.transform.Translate(new Vector3(0f,0f,0.005f));
-                    _controller.Move(move * playerspd * Time.deltaTime); // This does not work for some reason
+                    // _controller.Move(move * playerspd * Time.deltaTime); // This does not work for some reason
                 } else{
                     
                     if (mother.transform.rotation.eulerAngles.y == 270 || mother.transform.rotation.eulerAngles.y == 180){
@@ -96,7 +96,7 @@ public class Playercontrol : MonoBehaviour
                     anim.Play("Base Layer.Sprint");
                     running = true;
                     Vector3 move = transform.forward * _playerControl.Player.backward.ReadValue<float>();
-                    _controller.Move(move * playerspd * Time.deltaTime);
+                    // _controller.Move(move * playerspd * Time.deltaTime);
                     mother.transform.Translate(new Vector3(0f,0f,0.005f));
                 }else{
                     
@@ -116,7 +116,7 @@ public class Playercontrol : MonoBehaviour
                     anim.Play("Base Layer.Sprint");
                     running = true;
                     Vector3 move = transform.forward * _playerControl.Player.left.ReadValue<float>();
-                    _controller.Move(move * playerspd * Time.deltaTime);
+                    // _controller.Move(move * playerspd * Time.deltaTime);
                     mother.transform.Translate(new Vector3(0f,0f,0.005f));
 
                 }else{
@@ -137,7 +137,7 @@ public class Playercontrol : MonoBehaviour
                     anim.Play("Base Layer.Sprint");
                     running = true;
                     Vector3 move = transform.forward * _playerControl.Player.right.ReadValue<float>();
-                    _controller.Move(move * playerspd * Time.deltaTime);
+                    // _controller.Move(move * playerspd * Time.deltaTime);
                     mother.transform.Translate(new Vector3(0f,0f,0.005f));
 
                 }else{
@@ -154,9 +154,10 @@ public class Playercontrol : MonoBehaviour
             }
 
             else if(_playerControl.Player.jump.triggered){
-                playervec = mother.transform.forward * 2;
-                playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
-                // mother.transform.rotation.eulerAngles.y
+                // playervec = mother.transform.forward * 2;
+                // playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
+                mother.transform.Translate(new Vector3(0f,0.5f,0f));
+                mother.transform.Translate(new Vector3(0f,0f,0.5f));
                 anim.Play("Base Layer.Jumping");
                 waiting = true;
                 
@@ -187,25 +188,27 @@ public class Playercontrol : MonoBehaviour
 
         if (_playerControl.Player.climb.ReadValue<float>() > 0)
         {
-            Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
+            // Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
             // Vector3 fwd = transform.TransformDirection(Vector3.forward);
             // int layer = 1 << 3;
             //int layerMask = 1 << 3;
             //layerMask = ~layerMask;
             if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit,  Mathf.Infinity, layerMsk)){
-                Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
                 if (hit.collider.tag == "wall"){
+                    Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
                     float tall = hit.collider.bounds.size.y;
-                    playervec.y = Mathf.Sqrt(tall * -2.0f * gravityValue);
+                    // playervec.y = Mathf.Sqrt(tall * -2.0f * gravityValue);
+                    mother.transform.Translate(new Vector3(0f,1f,0f));
                 }
                 Debug.Log(hit.collider.tag);
             }
             //Debug.Log(fwd);
-            Debug.Log(transform.forward);
+            // Debug.Log(transform.forward);
         }
 
-        playervec.y += gravityValue * Time.deltaTime;
-        _controller.Move(playervec * Time.deltaTime);
+        // playervec.y += gravityValue * Time.deltaTime;
+        // _controller.Move(playervec * Time.deltaTime);
+        // transform.Translate(new Vector3(0f,-0.01f,0f));
         
         //nene code 3
         spawn_time -= Time.deltaTime;
