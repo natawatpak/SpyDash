@@ -6,6 +6,14 @@
             "id": "a0063950-56f3-4a16-b9a0-61ca28fb783b",
             "actions": [
                 {
+                    "name": "Button",
+                    "type": "Button",
+                    "id": "97c6bca6-a19f-492f-a4c0-1c001a59c887",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "TouchInput",
                     "type": "Button",
                     "id": "f5cd35c8-7946-44d7-9335-0836198b7eea",
@@ -42,6 +50,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "TouchPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e66af527-5ffa-4950-ab71-c95818503882",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
