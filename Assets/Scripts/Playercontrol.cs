@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Playercontrol : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Playercontrol : MonoBehaviour
     public GameObject obstacle;
     private float spawn_time = 3;
     public Rigidbody rigid;
+    public float time;
 
 
 
@@ -22,6 +24,7 @@ public class Playercontrol : MonoBehaviour
 
     private bool waiting = false;
     private bool running = false;
+    private bool canMove = true;
 
     private float rotation = 360f;
 
@@ -33,6 +36,7 @@ public class Playercontrol : MonoBehaviour
     [SerializeField] private float turnSpd = 180f;
     [SerializeField] private bool grounded;
     public GameObject mother;
+    public Text timeDisplay;
     
     //nene code 2
     private void CreateObs(){
@@ -50,6 +54,7 @@ public class Playercontrol : MonoBehaviour
         Debug.Log("Start");
         anim = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
+        time = 200;
 
     }
     private void Awake(){
@@ -68,154 +73,165 @@ public class Playercontrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!waiting) {
-            if(_playerControl.Player.forward.ReadValue<float>() > 0){
+        time = time - (float)Time.deltaTime;
 
-                if (mother.transform.rotation.eulerAngles.y == 0){
-                    anim.Play("Base Layer.Sprint");
-                    running = true;
-                    Vector3 move = mother.transform.forward * _playerControl.Player.forward.ReadValue<float>();
-                    mother.transform.Translate(new Vector3(0f,0f,0.005f));
-                    // _controller.Move(move * playerspd * Time.deltaTime); // This does not work for some reason
-                } else{
-                    
-                    if (mother.transform.rotation.eulerAngles.y == 270 || mother.transform.rotation.eulerAngles.y == 180){
-                        anim.Play("Base Layer.Turn Right 90");
-                        mother.GetComponent<Transform>().Rotate(0, 90 , 0);
-                    }else{
-                        anim.Play("Base Layer.Turn Left 90");
-                        mother.GetComponent<Transform>().Rotate(0, -90 , 0);
-                    }
-                    waiting = true;
-                }
-                
+        if (time < 0){
+            timeDisplay.text = "Time\n0.00";
+            canMove = false;
 
-            }else if(_playerControl.Player.backward.ReadValue<float>() > 0) {
-
-                if (mother.transform.rotation.eulerAngles.y == 180){
-                    anim.Play("Base Layer.Sprint");
-                    running = true;
-                    Vector3 move = transform.forward * _playerControl.Player.backward.ReadValue<float>();
-                    // _controller.Move(move * playerspd * Time.deltaTime);
-                    mother.transform.Translate(new Vector3(0f,0f,0.005f));
-                }else{
-                    
-                    if (mother.transform.rotation.eulerAngles.y == 0 || mother.transform.rotation.eulerAngles.y == 270){
-                        anim.Play("Base Layer.Turn Left 90");
-                        mother.GetComponent<Transform>().Rotate(0, -90 , 0);
-                    }else{
-                        anim.Play("Base Layer.Turn Right 90");
-                        mother.GetComponent<Transform>().Rotate(0, 90 , 0);
-                    }
-                    waiting = true;
-                }
-
-            }else if(_playerControl.Player.left.ReadValue<float>() > 0){
-
-                if (mother.transform.rotation.eulerAngles.y == 270){
-                    anim.Play("Base Layer.Sprint");
-                    running = true;
-                    Vector3 move = transform.forward * _playerControl.Player.left.ReadValue<float>();
-                    // _controller.Move(move * playerspd * Time.deltaTime);
-                    mother.transform.Translate(new Vector3(0f,0f,0.005f));
-
-                }else{
-                    
-                    if (mother.transform.rotation.eulerAngles.y == 180 || mother.transform.rotation.eulerAngles.y == 90){
-                        anim.Play("Base Layer.Turn Right 90");
-                        mother.GetComponent<Transform>().Rotate(0, 90 , 0);
-                    }else{
-                        anim.Play("Base Layer.Turn Left 90");
-                        mother.GetComponent<Transform>().Rotate(0, -90 , 0);
-                    }
-                    waiting = true;
-                }
-            }
-            else if(_playerControl.Player.right.ReadValue<float>() > 0){
-
-                if (mother.transform.rotation.eulerAngles.y == 90){
-                    anim.Play("Base Layer.Sprint");
-                    running = true;
-                    Vector3 move = transform.forward * _playerControl.Player.right.ReadValue<float>();
-                    // _controller.Move(move * playerspd * Time.deltaTime);
-                    mother.transform.Translate(new Vector3(0f,0f,0.005f));
-
-                }else{
-                    
-                    if (mother.transform.rotation.eulerAngles.y == 0 || mother.transform.rotation.eulerAngles.y == -90){
-                        anim.Play("Base Layer.Turn Right 90");
-                        mother.GetComponent<Transform>().Rotate(0, 90 , 0);
-                    }else{
-                        anim.Play("Base Layer.Turn Left 90");
-                        mother.GetComponent<Transform>().Rotate(0, -90 , 0);
-                    }
-                    waiting = true;
-                }
-            }
-
-            else if(_playerControl.Player.jump.triggered){
-                // playervec = mother.transform.forward * 2;
-                // playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
-                mother.transform.Translate(new Vector3(0f,0.5f,0f));
-                mother.transform.Translate(new Vector3(0f,0f,0.5f));
-                anim.Play("Base Layer.Jumping");
-                waiting = true;
-                
-            }
-            
-            else if (running){
-
-                anim.Play("Base Layer.Stop Walking");
-                running = false;
-                waiting = true;
-
-            }else{
-
-                anim.Play("Base Layer.Ninja Idle");
-
-            }
-        }else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Ninja Idle")){
-                waiting = false;
-                playervec = new Vector3(0,0,0);
-            }
-
-
-        float angleX = transform.rotation.eulerAngles.x;  
-        float angleY = transform.rotation.eulerAngles.y; 
-        float angleZ = transform.rotation.eulerAngles.z;
-        Vector3 fwd = new Vector3 (angleX,angleY,angleZ);
-        RaycastHit hit;
-
-        if (_playerControl.Player.climb.ReadValue<float>() > 0)
-        {
-            // Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
-            // Vector3 fwd = transform.TransformDirection(Vector3.forward);
-            // int layer = 1 << 3;
-            //int layerMask = 1 << 3;
-            //layerMask = ~layerMask;
-            if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit,  Mathf.Infinity, layerMsk)){
-                if (hit.collider.tag == "wall"){
-                    Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
-                    float tall = hit.collider.bounds.size.y;
-                    // playervec.y = Mathf.Sqrt(tall * -2.0f * gravityValue);
-                    mother.transform.Translate(new Vector3(0f,1f,0f));
-                }
-                Debug.Log(hit.collider.tag);
-            }
-            //Debug.Log(fwd);
-            // Debug.Log(transform.forward);
+        }else{
+            timeDisplay.text = "Time\n" + time.ToString("#.00");
         }
-
-        // playervec.y += gravityValue * Time.deltaTime;
-        // _controller.Move(playervec * Time.deltaTime);
-        // transform.Translate(new Vector3(0f,-0.01f,0f));
         
-        //nene code 3
-        spawn_time -= Time.deltaTime;
-        if (spawn_time <= 0) {
+        if (canMove){
+            if (!waiting) {
+                if(_playerControl.Player.forward.ReadValue<float>() > 0){
+
+                    if (mother.transform.rotation.eulerAngles.y == 0){
+                        anim.Play("Base Layer.Sprint");
+                        running = true;
+                        Vector3 move = mother.transform.forward * _playerControl.Player.forward.ReadValue<float>();
+                        mother.transform.Translate(new Vector3(0f,0f,0.005f));
+                        // _controller.Move(move * playerspd * Time.deltaTime); // This does not work for some reason
+                    } else{
+                        
+                        if (mother.transform.rotation.eulerAngles.y == 270 || mother.transform.rotation.eulerAngles.y == 180){
+                            anim.Play("Base Layer.Turn Right 90");
+                            mother.GetComponent<Transform>().Rotate(0, 90 , 0);
+                        }else{
+                            anim.Play("Base Layer.Turn Left 90");
+                            mother.GetComponent<Transform>().Rotate(0, -90 , 0);
+                        }
+                        waiting = true;
+                    }
+                    
+
+                }else if(_playerControl.Player.backward.ReadValue<float>() > 0) {
+
+                    if (mother.transform.rotation.eulerAngles.y == 180){
+                        anim.Play("Base Layer.Sprint");
+                        running = true;
+                        Vector3 move = transform.forward * _playerControl.Player.backward.ReadValue<float>();
+                        // _controller.Move(move * playerspd * Time.deltaTime);
+                        mother.transform.Translate(new Vector3(0f,0f,0.005f));
+                    }else{
+                        
+                        if (mother.transform.rotation.eulerAngles.y == 0 || mother.transform.rotation.eulerAngles.y == 270){
+                            anim.Play("Base Layer.Turn Left 90");
+                            mother.GetComponent<Transform>().Rotate(0, -90 , 0);
+                        }else{
+                            anim.Play("Base Layer.Turn Right 90");
+                            mother.GetComponent<Transform>().Rotate(0, 90 , 0);
+                        }
+                        waiting = true;
+                    }
+
+                }else if(_playerControl.Player.left.ReadValue<float>() > 0){
+
+                    if (mother.transform.rotation.eulerAngles.y == 270){
+                        anim.Play("Base Layer.Sprint");
+                        running = true;
+                        Vector3 move = transform.forward * _playerControl.Player.left.ReadValue<float>();
+                        // _controller.Move(move * playerspd * Time.deltaTime);
+                        mother.transform.Translate(new Vector3(0f,0f,0.005f));
+
+                    }else{
+                        
+                        if (mother.transform.rotation.eulerAngles.y == 180 || mother.transform.rotation.eulerAngles.y == 90){
+                            anim.Play("Base Layer.Turn Right 90");
+                            mother.GetComponent<Transform>().Rotate(0, 90 , 0);
+                        }else{
+                            anim.Play("Base Layer.Turn Left 90");
+                            mother.GetComponent<Transform>().Rotate(0, -90 , 0);
+                        }
+                        waiting = true;
+                    }
+                }
+                else if(_playerControl.Player.right.ReadValue<float>() > 0){
+
+                    if (mother.transform.rotation.eulerAngles.y == 90){
+                        anim.Play("Base Layer.Sprint");
+                        running = true;
+                        Vector3 move = transform.forward * _playerControl.Player.right.ReadValue<float>();
+                        // _controller.Move(move * playerspd * Time.deltaTime);
+                        mother.transform.Translate(new Vector3(0f,0f,0.005f));
+
+                    }else{
+                        
+                        if (mother.transform.rotation.eulerAngles.y == 0 || mother.transform.rotation.eulerAngles.y == -90){
+                            anim.Play("Base Layer.Turn Right 90");
+                            mother.GetComponent<Transform>().Rotate(0, 90 , 0);
+                        }else{
+                            anim.Play("Base Layer.Turn Left 90");
+                            mother.GetComponent<Transform>().Rotate(0, -90 , 0);
+                        }
+                        waiting = true;
+                    }
+                }
+
+                else if(_playerControl.Player.jump.triggered){
+                    // playervec = mother.transform.forward * 2;
+                    // playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
+                    mother.transform.Translate(new Vector3(0f,0.05f,0f));
+                    mother.transform.Translate(new Vector3(0f,0f,0.04f));
+                    anim.Play("Base Layer.Jumping");
+                    waiting = true;
+                    
+                }
+                
+                else if (running){
+
+                    anim.Play("Base Layer.Stop Walking");
+                    running = false;
+                    waiting = true;
+
+                }else{
+
+                    anim.Play("Base Layer.Ninja Idle");
+
+                }
+            }else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Ninja Idle")){
+                    waiting = false;
+                    playervec = new Vector3(0,0,0);
+                }
+
+
+            float angleX = transform.rotation.eulerAngles.x;  
+            float angleY = transform.rotation.eulerAngles.y; 
+            float angleZ = transform.rotation.eulerAngles.z;
+            Vector3 fwd = new Vector3 (angleX,angleY,angleZ);
+            RaycastHit hit;
+
+            if (_playerControl.Player.climb.ReadValue<float>() > 0)
+            {
+                // Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
+                // Vector3 fwd = transform.TransformDirection(Vector3.forward);
+                // int layer = 1 << 3;
+                //int layerMask = 1 << 3;
+                //layerMask = ~layerMask;
+                if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit,  Mathf.Infinity, layerMsk)){
+                    if (hit.collider.tag == "wall"){
+                        Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
+                        float tall = hit.collider.bounds.size.y;
+                        // playervec.y = Mathf.Sqrt(tall * -2.0f * gravityValue);
+                        mother.transform.Translate(new Vector3(0f,1f,0f));
+                    }
+                    Debug.Log(hit.collider.tag);
+                }
+                //Debug.Log(fwd);
+                // Debug.Log(transform.forward);
+            }
+
+            // playervec.y += gravityValue * Time.deltaTime;
+            // _controller.Move(playervec * Time.deltaTime);
+            // transform.Translate(new Vector3(0f,-0.01f,0f));
+            
+            //nene code 3
+            spawn_time -= Time.deltaTime;
+            if (spawn_time <= 0) {
                 CreateObs();
                 spawn_time = 5;
             }
-
+        }
     }
 }
