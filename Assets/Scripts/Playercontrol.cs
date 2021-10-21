@@ -37,6 +37,8 @@ public class Playercontrol : MonoBehaviour
     [SerializeField] private bool grounded;
     public GameObject mother;
     public Text timeDisplay;
+    public bool gonnaGo;
+    Vector3 toJump;
     
     //nene code 2
     private void CreateObs(){
@@ -44,8 +46,7 @@ public class Playercontrol : MonoBehaviour
         float ypos = rigid.position.y;
         float zpos = rigid.position.z;
         for (int i = 0; i < 3; i++) {
-            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-3f, 3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(3f, 10f)), this.transform.rotation);
-
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-0.3f, 0.3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
         }
     }
 
@@ -56,6 +57,25 @@ public class Playercontrol : MonoBehaviour
         _controller = GetComponent<CharacterController>();
         time = 200;
 
+    }
+    IEnumerator Hover()
+    {
+        gameObject.GetComponent<Rigidbody>().useGravity = false;
+        yield return new WaitForSeconds(2);
+        gameObject.GetComponent<Rigidbody>().useGravity = true;
+        // StopCoroutine(Hover());
+    }
+    private void Hunnn()
+    {
+        Debug.Log("general kinobi");
+        if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, Mathf.Infinity, layerMsk)){
+            // mother.transform.Translate(new Vector3(0f,0.0001f,0f));
+            rigid.AddForce(transform.up * 0.1f);
+            
+            }
+        mother.transform.Translate(new Vector3(0f,1f,0f));
+        gonnaGo = false;
+        StartCoroutine(Hover());
     }
     private void Awake(){
         _playerControl = new MyControl();
@@ -75,13 +95,13 @@ public class Playercontrol : MonoBehaviour
     {
         time = time - (float)Time.deltaTime;
 
-        if (time < 0){
-            timeDisplay.text = "Time\n0.00";
-            canMove = false;
+         if (time < 0){
+             timeDisplay.text = "Time\n0.00";
+             canMove = false;
 
         }else{
-            timeDisplay.text = "Time\n" + time.ToString("#.00");
-        }
+             timeDisplay.text = "Time\n" + time.ToString("#.00");
+         }
         
         if (canMove){
             if (!waiting) {
@@ -194,7 +214,10 @@ public class Playercontrol : MonoBehaviour
                     waiting = false;
                     playervec = new Vector3(0,0,0);
                 }
-
+            //Falling out of bound respawn function
+            if (mother.transform.position.y <= -5) {
+            mother.transform.SetPositionAndRotation(GameObject.FindGameObjectWithTag("Start").transform.position + new Vector3(0f,0.5f,0f), mother.transform.rotation);
+            }
 
             float angleX = transform.rotation.eulerAngles.x;  
             float angleY = transform.rotation.eulerAngles.y; 
@@ -204,29 +227,33 @@ public class Playercontrol : MonoBehaviour
 
             if (_playerControl.Player.climb.ReadValue<float>() > 0)
             {
-                // Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
-                // Vector3 fwd = transform.TransformDirection(Vector3.forward);
-                // int layer = 1 << 3;
-                //int layerMask = 1 << 3;
-                //layerMask = ~layerMask;
-                if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit,  Mathf.Infinity, layerMsk)){
-                    if (hit.collider.tag == "wall"){
-                        Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
-                        float tall = hit.collider.bounds.size.y;
-                        // playervec.y = Mathf.Sqrt(tall * -2.0f * gravityValue);
-                        mother.transform.Translate(new Vector3(0f,1f,0f));
-                    }
+                if (Physics.Raycast(transform.position + new Vector3(0f,0.1f,0f), transform.forward, out hit,  2f, layerMsk)){
                     Debug.Log(hit.collider.tag);
+                    if (hit.collider.tag == "wall"){
+                        if (gonnaGo == false){
+                            gonnaGo = true;
+                            gameObject.GetComponent<Rigidbody>().useGravity = false;
+                            // Debug.Log(gonnaGo);
+                            toJump = new Vector3(mother.transform.position.x - hit.transform.position.x, 0f, mother.transform.position.z - hit.transform.position.z);
+                            // if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit, Mathf.Infinity, layerMsk)){
+                            // mother.transform.Translate(new Vector3(0f,0.01f,0f));
+                            mother.transform.position = Vector3.Lerp(mother.transform.position, mother.transform.position + new Vector3(0f, hit.collider.bounds.size.y + 1f, 0f), 0.5f * Time.deltaTime);
+                            // mother.transform.Translate(new Vector3(0f,1.5f,0f));
+                            gonnaGo = false;
+                            // StartCoroutine(Hover());
+                        }
+                        Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
+                    }
+                    // if(hit.transform == null){
+                    //     // toJump = new Vector3(mother.transform.position.x - hit.transform.position.x, 0f, mother.transform.position.z - hit.transform.position.z);
+                    //     Debug.Log(mother.transform.position);
+                    //     mother.transform.Translate(0f, 0f, 2f);
+                    //     gameObject.GetComponent<Rigidbody>().useGravity = true;
+                    // }
+                }else{
+                    gameObject.GetComponent<Rigidbody>().useGravity = true;
                 }
-                //Debug.Log(fwd);
-                // Debug.Log(transform.forward);
             }
-
-            // playervec.y += gravityValue * Time.deltaTime;
-            // _controller.Move(playervec * Time.deltaTime);
-            // transform.Translate(new Vector3(0f,-0.01f,0f));
-            
-            //nene code 3
             spawn_time -= Time.deltaTime;
             if (spawn_time <= 0) {
                 CreateObs();

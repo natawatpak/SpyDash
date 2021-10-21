@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2647027472175093343}
   m_Layer: 0
   m_Name: imYourMother
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,7 +56,7 @@ CharacterController:
   m_GameObject: {fileID: 2917568019250351300}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Height: 1.8
   m_Radius: 0.5
@@ -113,6 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa449c0938ca4c0db33707f210c7166, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  obstacle: {fileID: 0}
+  rigid: {fileID: 0}
+  time: 0
   layerMsk:
     serializedVersion: 2
     m_Bits: 8
@@ -122,6 +125,7 @@ MonoBehaviour:
   turnSpd: 180
   grounded: 0
   mother: {fileID: 2647027472175093342}
+  timeDisplay: {fileID: 0}
 --- !u!1001 &2647027472607490453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -212,6 +216,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b08da594e609c4b38b0833127034ebeb, type: 3}
       propertyPath: m_Name
       value: char (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b08da594e609c4b38b0833127034ebeb, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 2356836424548362367, guid: b08da594e609c4b38b0833127034ebeb, type: 3}
       propertyPath: m_Materials.Array.data[0]

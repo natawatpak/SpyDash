@@ -6,6 +6,7 @@ TagManager:
   tags:
   - wall
   - timeDisplay
+  - Start
   layers:
   - Default
   - TransparentFX

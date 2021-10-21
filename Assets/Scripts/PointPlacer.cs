@@ -21,6 +21,7 @@ public class PointPlacer : MonoBehaviour
     public GameObject button4;
     public GameObject button5;
     public GameObject button6;
+    public GameObject time;
     public bool placedstartpoint = false;
     public bool nextstage = false;
     public bool placedendpoint = false;
@@ -47,7 +48,9 @@ public class PointPlacer : MonoBehaviour
     }
     void Start()
     {
-
+        foreach(var plane in arPlaneManager.trackables) {
+                Destroy(plane);
+            }
     }
     bool gettouchpos(out Vector2 touchposition) {
         if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
@@ -129,6 +132,7 @@ public class PointPlacer : MonoBehaviour
             } else if (nextstage == true) {
                 //character = Instantiate(character, x + new Vector3(0f, 0.5f, 0f), y);
                 //GetComponent(PointPlacer).enabled = false;
+                time.SetActive(true);
                 character.SetActive(true);
                 character.transform.SetPositionAndRotation(x + new Vector3(0f, 0.5f, 0f), new Quaternion(0f,0f,0f,0f));
                 button1.SetActive(true);
