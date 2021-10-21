@@ -4,23 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-<<<<<<< Updated upstream
-=======
   - wall
-  - playertag
-  - floortag
->>>>>>> Stashed changes
-  - obstacle
+  - timeDisplay
+  - Start
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - avoid
   - Water
   - UI
   - 
   - 
-  - 
+  - test
   - 
   - 
   - 
