@@ -2052,6 +2052,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 273026723}
     - target: {fileID: 2647027472527492372, guid: b59a2441be8374e4eafb18a6653cc62d, type: 3}
+      propertyPath: myself
+      value: 
+      objectReference: {fileID: 273026720}
+    - target: {fileID: 2647027472527492372, guid: b59a2441be8374e4eafb18a6653cc62d, type: 3}
       propertyPath: tester
       value: 
       objectReference: {fileID: 3228205009278960351, guid: fae98d544c17dc4439741864483b5a0b, type: 3}

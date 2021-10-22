@@ -13,7 +13,7 @@ public class wallClaim : MonoBehaviour
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.8f;
     [SerializeField] private float turnSpd = 180f;
-    [SerializeField] private bool grounded;
+    public bool grounded;
     private Input_action inputActions;
 
     private void Awake()
@@ -58,6 +58,13 @@ public class wallClaim : MonoBehaviour
         if (grounded && playervec.y < 0)
         {
             playervec.y = 0f;
+        }
+        GameObject controlMe = GameObject.Find("char(1)");
+        Playercontrol controlScript = controlMe.GetComponent<Playercontrol>();
+        if (grounded){
+            controlScript.canspawn = true;
+        }else{
+            controlScript.canspawn = false;
         }
 
         Vector3 move = transform.forward * moveInput.y;

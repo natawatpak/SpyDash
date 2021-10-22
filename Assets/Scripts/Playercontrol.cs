@@ -12,6 +12,9 @@ public class Playercontrol : MonoBehaviour
     private float spawn_time = 3;
     public Rigidbody rigid;
     public float time;
+    public GameObject myself;
+    public bool canspawn = true;
+    //public int isclimbing = 0;
 
 
 
@@ -42,11 +45,11 @@ public class Playercontrol : MonoBehaviour
     
     //nene code 2
     private void CreateObs(){
-        float xpos = rigid.position.x;
-        float ypos = rigid.position.y;
-        float zpos = rigid.position.z;
+        float xpos = myself.transform.position.x;
+        float ypos = myself.transform.position.y;
+        float zpos = myself.transform.position.z;
         for (int i = 0; i < 3; i++) {
-            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-0.3f, 0.3f), ypos - (float)0.750213, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-0.3f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
         }
     }
 
@@ -102,6 +105,8 @@ public class Playercontrol : MonoBehaviour
         }else{
              timeDisplay.text = "Time\n" + time.ToString("#.00");
          }
+
+        
         
         if (canMove){
             if (!waiting) {
@@ -240,6 +245,7 @@ public class Playercontrol : MonoBehaviour
                             mother.transform.position = Vector3.Lerp(mother.transform.position, mother.transform.position + new Vector3(0f, hit.collider.bounds.size.y + 1f, 0f), 0.5f * Time.deltaTime);
                             // mother.transform.Translate(new Vector3(0f,1.5f,0f));
                             gonnaGo = false;
+                            //isclimbing = 1;
                             // StartCoroutine(Hover());
                         }
                         Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
@@ -256,7 +262,9 @@ public class Playercontrol : MonoBehaviour
             }
             spawn_time -= Time.deltaTime;
             if (spawn_time <= 0) {
+                if(canspawn){
                 CreateObs();
+                }
                 spawn_time = 5;
             }
         }

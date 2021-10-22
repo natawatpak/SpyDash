@@ -7,6 +7,8 @@ public class ObstacleAnimation : MonoBehaviour
     private float timeAnimate = 1;
     private int goup = 0;
     private float timeWait = 2;
+    public GameObject me;
+    
     //public GameObject playerChar;
     
     // Start is called before the first frame update
@@ -29,7 +31,7 @@ public class ObstacleAnimation : MonoBehaviour
             timeAnimate = 1;
         }
 
-        if (transform.position.y >= (float)1.103) {
+        if (transform.position.y >= me.transform.position.y-0.48) {
             goup = 1;
         }
 
@@ -49,9 +51,11 @@ public class ObstacleAnimation : MonoBehaviour
             timeAnimate = 1;
         }
 
-        if (transform.position.y <= (float)-1.341) {
+        if (transform.position.y <= me.transform.position.y-0.52) {
             goup = 0;
         }
+
+        
         
 
     }
