@@ -49,8 +49,13 @@ public class Playercontrol : MonoBehaviour
         float xpos = myself.transform.position.x;
         float ypos = myself.transform.position.y;
         float zpos = myself.transform.position.z;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             float headingto = mother.transform.rotation.eulerAngles.y ;
+
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.3f, 1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.3f, 0.3f)), this.transform.rotation);
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.3f, 0.3f)), this.transform.rotation);
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-1f, -0.3f)), this.transform.rotation);
             // for real
             //Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
             // for test
@@ -67,17 +72,17 @@ public class Playercontrol : MonoBehaviour
             // }
 
 
-            if (mother.transform.rotation.eulerAngles.y >  0 && 90 >= mother.transform.rotation.eulerAngles.y){
-                Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
-            }else if ( mother.transform.rotation.eulerAngles.y >  90 && 180 >= mother.transform.rotation.eulerAngles.y){
-                Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f),ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
-            }else if( mother.transform.rotation.eulerAngles.y <  0 && -90 <= mother.transform.rotation.eulerAngles.y){
-                Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
-            }else if ( mother.transform.rotation.eulerAngles.y <  -90 && -180 < mother.transform.rotation.eulerAngles.y){
-                Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
-            }else{
-                Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.5f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
-            }
+            // if (mother.transform.rotation.eulerAngles.y >  0 && 90 >= mother.transform.rotation.eulerAngles.y){
+            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
+            // }else if ( mother.transform.rotation.eulerAngles.y >  90 && 180 >= mother.transform.rotation.eulerAngles.y){
+            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f),ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
+            // }else if( mother.transform.rotation.eulerAngles.y <  0 && -90 <= mother.transform.rotation.eulerAngles.y){
+            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
+            // }else if ( mother.transform.rotation.eulerAngles.y <  -90 && -180 < mother.transform.rotation.eulerAngles.y){
+            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
+            // }else{
+            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.5f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
+            // }
 
 
 
