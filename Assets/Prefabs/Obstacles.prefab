@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1469529213207247281}
   - component: {fileID: 3711008155687587195}
   - component: {fileID: 3359266389786120770}
+  - component: {fileID: -4716096525031052960}
   m_Layer: 0
   m_Name: Obstacles
   m_TagString: obstacle_col
@@ -95,3 +96,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   me: {fileID: 0}
+--- !u!65 &-4716096525031052960
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2918572463748656302}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.006, y: 0.005999999, z: 0.0018506154}
+  m_Center: {x: 0, y: 0, z: 0.0009253077}
