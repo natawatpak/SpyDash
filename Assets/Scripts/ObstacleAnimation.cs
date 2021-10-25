@@ -15,6 +15,7 @@ public class ObstacleAnimation : MonoBehaviour
     void Start()
     {
         transform.Rotate(-90,0,0);
+        me = GameObject.Find("char (1)");
         
         
     }
@@ -66,11 +67,11 @@ public class ObstacleAnimation : MonoBehaviour
         {
             Debug.Log("hi floor");
         }
-        if (collision.gameObject.tag == "obstacle") {
+        if (collision.gameObject.tag == "obstacle_col") {
             Debug.Log("hi myself");
             Destroy(collision.gameObject);
         } 
-        if (collision.gameObject.tag != "playertag" && collision.gameObject.tag != "floortag")
+        if (collision.gameObject.tag != "Player" && collision.gameObject.tag != "floortag")
         {
             Debug.Log("hi OUTSIDE");
             Destroy(gameObject);

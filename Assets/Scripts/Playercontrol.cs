@@ -269,4 +269,15 @@ public class Playercontrol : MonoBehaviour
             }
         }
     }
+
+    private void OnCollisionEnter(Collision collision) {
+        Debug.Log("collide");
+        
+        if (collision.gameObject.tag == "obstacle_col") {
+            Debug.Log("hi myself");
+            time -= 5f;
+            Destroy(collision.gameObject);
+        } 
+        
+    }
 }
