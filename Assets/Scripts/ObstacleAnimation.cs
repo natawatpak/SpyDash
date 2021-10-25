@@ -19,8 +19,8 @@ public class ObstacleAnimation : MonoBehaviour
     {
         transform.Rotate(-90,0,0);
         me = GameObject.Find("char (1)");
-        top = 0.45f;
-        bottom = 0.52f;
+        top = 0f;
+        bottom = 0.35f;
         
         
     }
