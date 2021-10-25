@@ -309,7 +309,7 @@ public class Playercontrol : MonoBehaviour
                 if(canspawn){
                 CreateObs();
                 }
-                spawn_time = 5;
+                spawn_time = 10;
             }
         }
     }
