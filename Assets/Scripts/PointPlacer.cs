@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+using touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+
 [RequireComponent(typeof(ARRaycastManager))]
 public class PointPlacer : MonoBehaviour
 {
@@ -30,6 +33,7 @@ public class PointPlacer : MonoBehaviour
     [SerializeField] public GameObject character;
     [SerializeField] public GameObject objectospawn1;
     [SerializeField] public GameObject objectospawn2;
+    public ARSession arSession;
 
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     // Start is called before the first frame update
@@ -37,7 +41,9 @@ public class PointPlacer : MonoBehaviour
     {
         screencontrol = new Screencontrol();
         arRaycastmng = GetComponent<ARRaycastManager>();
-        arPlaneManager = GetComponent<ARPlaneManager>();    
+        arPlaneManager = GetComponent<ARPlaneManager>();
+        EnhancedTouchSupport.Enable();
+        arSession.Reset();
     }
     private void OnEnable() {
         screencontrol.Enable();
@@ -48,9 +54,7 @@ public class PointPlacer : MonoBehaviour
     }
     void Start()
     {
-        foreach(var plane in arPlaneManager.trackables) {
-                Destroy(plane);
-            }
+        
     }
     bool gettouchpos(out Vector2 touchposition) {
         if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
@@ -105,11 +109,11 @@ public class PointPlacer : MonoBehaviour
         //     }
         // }
         if (nextstage == false) {
-        if(!gettouchpos(out Vector2 touchposition)) {
-                return;
-        }
-            if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
-                if (arRaycastmng.Raycast(touchposition, hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes)) {
+            if (touch.activeFingers.Count == 1)
+            {
+            touch activeTouch = touch.activeFingers[0].currentTouch;
+            if(activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
+                if (arRaycastmng.Raycast(activeTouch.startScreenPosition, hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes)) {
                     var hitpose = hits[0].pose;
                     
                     if (placedstartpoint == false && placedendpoint == false) {
@@ -129,6 +133,8 @@ public class PointPlacer : MonoBehaviour
                         }
                     }
                 }
+            //Debug.Log($"Phase: {activeTouch.phase} | Position: {activeTouch.startScreenPosition}");
+            }   
             } else if (nextstage == true) {
                 //character = Instantiate(character, x + new Vector3(0f, 0.5f, 0f), y);
                 //GetComponent(PointPlacer).enabled = false;

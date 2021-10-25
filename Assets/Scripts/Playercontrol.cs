@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.SceneManagement;
 public class Playercontrol : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -12,16 +12,11 @@ public class Playercontrol : MonoBehaviour
     private float spawn_time = 3;
     public Rigidbody rigid;
     public float time;
-
-
-
     private CharacterController _controller;
     private MyControl _playerControl;
     private Animator anim;
-
     private GlideController Glide;
     //private Vector3 _playerVelocity;
-
     private bool waiting = false;
     private bool running = false;
     private bool canMove = true;
@@ -30,11 +25,14 @@ public class Playercontrol : MonoBehaviour
 
     private Vector3 playervec;
     [SerializeField] private LayerMask layerMsk;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip playing_sound;
     [SerializeField] private float playerspd = 5f;
     [SerializeField] private float jumpHeight = 1.0f;
     [SerializeField] private float gravityValue = -9.8f;
     [SerializeField] private float turnSpd = 180f;
     [SerializeField] private bool grounded;
+    [SerializeField] private string SceneName;
     public GameObject mother;
     public Text timeDisplay;
     public bool gonnaGo;
@@ -55,8 +53,9 @@ public class Playercontrol : MonoBehaviour
         Debug.Log("Start");
         anim = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
         time = 200;
-
+        audioSource.PlayOneShot(playing_sound, 0.5f);
     }
     IEnumerator Hover()
     {
@@ -94,11 +93,10 @@ public class Playercontrol : MonoBehaviour
     void Update()
     {
         time = time - (float)Time.deltaTime;
-
          if (time < 0){
              timeDisplay.text = "Time\n0.00";
              canMove = false;
-
+             SceneManager.LoadScene(SceneName, LoadSceneMode.Single);
         }else{
              timeDisplay.text = "Time\n" + time.ToString("#.00");
          }
@@ -108,7 +106,7 @@ public class Playercontrol : MonoBehaviour
                 if(_playerControl.Player.forward.ReadValue<float>() > 0){
 
                     if (mother.transform.rotation.eulerAngles.y == 0){
-                        anim.Play("Base Layer.Sprint");
+                        //anim.Play("Base Layer.Sprint");
                         running = true;
                         Vector3 move = mother.transform.forward * _playerControl.Player.forward.ReadValue<float>();
                         mother.transform.Translate(new Vector3(0f,0f,0.005f));
@@ -116,10 +114,10 @@ public class Playercontrol : MonoBehaviour
                     } else{
                         
                         if (mother.transform.rotation.eulerAngles.y == 270 || mother.transform.rotation.eulerAngles.y == 180){
-                            anim.Play("Base Layer.Turn Right 90");
+                            //anim.Play("Base Layer.Turn Right 90");
                             mother.GetComponent<Transform>().Rotate(0, 90 , 0);
                         }else{
-                            anim.Play("Base Layer.Turn Left 90");
+                            //anim.Play("Base Layer.Turn Left 90");
                             mother.GetComponent<Transform>().Rotate(0, -90 , 0);
                         }
                         waiting = true;
@@ -129,7 +127,7 @@ public class Playercontrol : MonoBehaviour
                 }else if(_playerControl.Player.backward.ReadValue<float>() > 0) {
 
                     if (mother.transform.rotation.eulerAngles.y == 180){
-                        anim.Play("Base Layer.Sprint");
+                        //anim.Play("Base Layer.Sprint");
                         running = true;
                         Vector3 move = transform.forward * _playerControl.Player.backward.ReadValue<float>();
                         // _controller.Move(move * playerspd * Time.deltaTime);
@@ -137,10 +135,10 @@ public class Playercontrol : MonoBehaviour
                     }else{
                         
                         if (mother.transform.rotation.eulerAngles.y == 0 || mother.transform.rotation.eulerAngles.y == 270){
-                            anim.Play("Base Layer.Turn Left 90");
+                            //anim.Play("Base Layer.Turn Left 90");
                             mother.GetComponent<Transform>().Rotate(0, -90 , 0);
                         }else{
-                            anim.Play("Base Layer.Turn Right 90");
+                            //anim.Play("Base Layer.Turn Right 90");
                             mother.GetComponent<Transform>().Rotate(0, 90 , 0);
                         }
                         waiting = true;
@@ -149,7 +147,7 @@ public class Playercontrol : MonoBehaviour
                 }else if(_playerControl.Player.left.ReadValue<float>() > 0){
 
                     if (mother.transform.rotation.eulerAngles.y == 270){
-                        anim.Play("Base Layer.Sprint");
+                        //anim.Play("Base Layer.Sprint");
                         running = true;
                         Vector3 move = transform.forward * _playerControl.Player.left.ReadValue<float>();
                         // _controller.Move(move * playerspd * Time.deltaTime);
@@ -158,10 +156,10 @@ public class Playercontrol : MonoBehaviour
                     }else{
                         
                         if (mother.transform.rotation.eulerAngles.y == 180 || mother.transform.rotation.eulerAngles.y == 90){
-                            anim.Play("Base Layer.Turn Right 90");
+                            //anim.Play("Base Layer.Turn Right 90");
                             mother.GetComponent<Transform>().Rotate(0, 90 , 0);
                         }else{
-                            anim.Play("Base Layer.Turn Left 90");
+                            //anim.Play("Base Layer.Turn Left 90");
                             mother.GetComponent<Transform>().Rotate(0, -90 , 0);
                         }
                         waiting = true;
@@ -170,7 +168,7 @@ public class Playercontrol : MonoBehaviour
                 else if(_playerControl.Player.right.ReadValue<float>() > 0){
 
                     if (mother.transform.rotation.eulerAngles.y == 90){
-                        anim.Play("Base Layer.Sprint");
+                        //anim.Play("Base Layer.Sprint");
                         running = true;
                         Vector3 move = transform.forward * _playerControl.Player.right.ReadValue<float>();
                         // _controller.Move(move * playerspd * Time.deltaTime);
@@ -179,10 +177,10 @@ public class Playercontrol : MonoBehaviour
                     }else{
                         
                         if (mother.transform.rotation.eulerAngles.y == 0 || mother.transform.rotation.eulerAngles.y == -90){
-                            anim.Play("Base Layer.Turn Right 90");
+                            //anim.Play("Base Layer.Turn Right 90");
                             mother.GetComponent<Transform>().Rotate(0, 90 , 0);
                         }else{
-                            anim.Play("Base Layer.Turn Left 90");
+                            //anim.Play("Base Layer.Turn Left 90");
                             mother.GetComponent<Transform>().Rotate(0, -90 , 0);
                         }
                         waiting = true;
@@ -194,20 +192,20 @@ public class Playercontrol : MonoBehaviour
                     // playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
                     mother.transform.Translate(new Vector3(0f,0.05f,0f));
                     mother.transform.Translate(new Vector3(0f,0f,0.04f));
-                    anim.Play("Base Layer.Jumping");
+                    //anim.Play("Base Layer.Jumping");
                     waiting = true;
                     
                 }
                 
                 else if (running){
 
-                    anim.Play("Base Layer.Stop Walking");
+                    //anim.Play("Base Layer.Stop Walking");
                     running = false;
                     waiting = true;
 
                 }else{
 
-                    anim.Play("Base Layer.Ninja Idle");
+                    //anim.Play("Base Layer.Ninja Idle");
 
                 }
             }else if (anim.GetCurrentAnimatorStateInfo(0).IsName("Base Layer.Ninja Idle")){
@@ -216,7 +214,7 @@ public class Playercontrol : MonoBehaviour
                 }
             //Falling out of bound respawn function
             if (mother.transform.position.y <= -5) {
-            mother.transform.SetPositionAndRotation(GameObject.FindGameObjectWithTag("Start").transform.position + new Vector3(0f,0.5f,0f), mother.transform.rotation);
+                mother.transform.SetPositionAndRotation(GameObject.FindGameObjectWithTag("Start").transform.position + new Vector3(0f,0.5f,0f), mother.transform.rotation);
             }
 
             float angleX = transform.rotation.eulerAngles.x;  
