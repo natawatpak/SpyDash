@@ -38,6 +38,7 @@ public class Playercontrol : MonoBehaviour
     [SerializeField] private float turnSpd = 180f;
     [SerializeField] private bool grounded;
     [SerializeField] private string SceneName;
+    public GameObject plane_ar;
     public GameObject mother;
     public Text timeDisplay;
     public bool gonnaGo;
@@ -49,7 +50,7 @@ public class Playercontrol : MonoBehaviour
         float ypos = myself.transform.position.y;
         float zpos = myself.transform.position.z;
         for (int i = 0; i < 3; i++) {
-            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range(-0.3f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
+            Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
         }
     }
 

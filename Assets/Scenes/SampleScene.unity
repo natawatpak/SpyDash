@@ -2065,6 +2065,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2918572463748656302, guid: 7cc25ade441eb034cb1e27084c0fd382, type: 3}
     - target: {fileID: 2647027472527492372, guid: b59a2441be8374e4eafb18a6653cc62d, type: 3}
+      propertyPath: plane_ar
+      value: 
+      objectReference: {fileID: 6328930435037766611, guid: 998d5b1d562045949bd6a8bb935912ee, type: 3}
+    - target: {fileID: 2647027472527492372, guid: b59a2441be8374e4eafb18a6653cc62d, type: 3}
       propertyPath: SceneName
       value: EndSceneLost
       objectReference: {fileID: 0}
