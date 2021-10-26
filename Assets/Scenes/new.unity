@@ -128,6 +128,28 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2917568019250351300, guid: b59a2441be8374e4eafb18a6653cc62d, type: 3}
   m_PrefabInstance: {fileID: 2647027471786785868}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &283513852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283513843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9adb441acf14b59b4976cda94a1bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePad: {fileID: 563260263}
+  moveSpeed: 0.5
+  Character: {fileID: 283513843}
+  time: 2000
+  timeDisplay: {fileID: 994648361}
+  layerMsk:
+    serializedVersion: 2
+    m_Bits: 0
+  gonnaGo: 0
+  SceneName: EndSceneLost
 --- !u!54 &300876384 stripped
 Rigidbody:
   m_CorrespondingSourceObject: {fileID: 1011462685530834693, guid: b59a2441be8374e4eafb18a6653cc62d, type: 3}
@@ -1712,6 +1734,13 @@ MonoBehaviour:
   gamePad: {fileID: 563260263}
   moveSpeed: 0.5
   Character: {fileID: 283513843}
+  time: 0
+  timeDisplay: {fileID: 0}
+  layerMsk:
+    serializedVersion: 2
+    m_Bits: 0
+  gonnaGo: 0
+  SceneName: 
 --- !u!114 &2060132209
 MonoBehaviour:
   m_ObjectHideFlags: 0
