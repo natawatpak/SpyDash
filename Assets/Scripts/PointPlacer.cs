@@ -18,16 +18,15 @@ public class PointPlacer : MonoBehaviour
     //public GameObject Butt;
     public GameObject Text1;
     public GameObject Text2;
-    public GameObject button1;
-    public GameObject button2;
-    public GameObject button3;
-    public GameObject button4;
-    public GameObject button5;
-    public GameObject button6;
+    public GameObject joystick;
+    public GameObject jump;
+    public GameObject boost;
     public GameObject time;
     public bool placedstartpoint = false;
     public bool nextstage = false;
     public bool placedendpoint = false;
+    private bool delay = false;
+    private float timer = 0f;
     private ARRaycastManager arRaycastmng;
     private ARPlaneManager arPlaneManager;
     [SerializeField] public GameObject character;
@@ -108,6 +107,12 @@ public class PointPlacer : MonoBehaviour
         //         }
         //     }
         // }
+        if (placedstartpoint == true) {
+            timer += Time.deltaTime;
+            if (timer > 1.0f) {
+                delay = true;
+            }
+        }
         if (nextstage == false) {
             if (touch.activeFingers.Count == 1)
             {
@@ -123,7 +128,8 @@ public class PointPlacer : MonoBehaviour
                        Text2.SetActive(true);
                        x = hitpose.position;
                        y = hitpose.rotation;
-                    } else if(placedstartpoint == true && placedendpoint == false) {
+                       
+                    } else if(placedstartpoint == true && placedendpoint == false && delay == true) {
                         endpoint = Instantiate(objectospawn2, hitpose.position, hitpose.rotation);
                         placedendpoint = true;
                         Text2.SetActive(false);
@@ -141,12 +147,9 @@ public class PointPlacer : MonoBehaviour
                 time.SetActive(true);
                 character.SetActive(true);
                 character.transform.SetPositionAndRotation(x + new Vector3(0f, 0.5f, 0f), new Quaternion(0f,0f,0f,0f));
-                button1.SetActive(true);
-                button2.SetActive(true);
-                button3.SetActive(true);
-                button4.SetActive(true);
-                button5.SetActive(true);
-                button6.SetActive(true);
+                joystick.SetActive(true);
+                jump.SetActive(true);
+                boost.SetActive(true);
                 this.enabled = false;
             }
         }

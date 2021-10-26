@@ -101,32 +101,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2917568019250351300}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &2647027472527492372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2917568019250351300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5aa449c0938ca4c0db33707f210c7166, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  obstacle: {fileID: 0}
-  rigid: {fileID: 0}
-  time: 0
-  layerMsk:
-    serializedVersion: 2
-    m_Bits: 8
-  audioSource: {fileID: 0}
-  playerspd: 5
-  jumpHeight: 1
-  gravityValue: -9.8
-  turnSpd: 180
-  grounded: 0
-  mother: {fileID: 2647027472175093342}
-  timeDisplay: {fileID: 0}
 --- !u!82 &5273231805089917016
 AudioSource:
   m_ObjectHideFlags: 0
@@ -223,6 +197,57 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2647027472527492372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917568019250351300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5aa449c0938ca4c0db33707f210c7166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstacle: {fileID: 0}
+  rigid: {fileID: 0}
+  time: 0
+  layerMsk:
+    serializedVersion: 2
+    m_Bits: 8
+  audioSource: {fileID: 0}
+  playing_sound: {fileID: 0}
+  playerspd: 5
+  jumpHeight: 1
+  gravityValue: -9.8
+  turnSpd: 180
+  grounded: 0
+  SceneName: 
+  mother: {fileID: 2647027472175093342}
+  timeDisplay: {fileID: 0}
+  gonnaGo: 0
+--- !u!114 &751275111329247582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917568019250351300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9adb441acf14b59b4976cda94a1bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePad: {fileID: 0}
+  moveSpeed: 0.5
+  Character: {fileID: 0}
+  time: 2000
+  timeDisplay: {fileID: 0}
+  layerMsk:
+    serializedVersion: 2
+    m_Bits: 0
+  gonnaGo: 0
+  SceneName: 
 --- !u!1001 &2647027472607490453
 PrefabInstance:
   m_ObjectHideFlags: 0
