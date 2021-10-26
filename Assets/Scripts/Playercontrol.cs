@@ -238,15 +238,15 @@ public class Playercontrol : MonoBehaviour
                     }
                 }
 
-                else if(_playerControl.Player.jump.triggered){
-                    // playervec = mother.transform.forward * 2;
-                    // playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
-                    mother.transform.Translate(new Vector3(0f,0.05f,0f));
-                    mother.transform.Translate(new Vector3(0f,0f,0.04f));
-                    //anim.Play("Base Layer.Jumping");
-                    waiting = true;
+                // else if(_playerControl.Player.jump.triggered){
+                //     // playervec = mother.transform.forward * 2;
+                //     // playervec.y = Mathf.Sqrt(1f * -2.0f * gravityValue);
+                //     mother.transform.Translate(new Vector3(0f,0.05f,0f));
+                //     mother.transform.Translate(new Vector3(0f,0f,0.04f));
+                //     //anim.Play("Base Layer.Jumping");
+                //     waiting = true;
                     
-                }
+                // }
                 
                 else if (running){
 
@@ -272,38 +272,38 @@ public class Playercontrol : MonoBehaviour
             float angleY = transform.rotation.eulerAngles.y; 
             float angleZ = transform.rotation.eulerAngles.z;
             Vector3 fwd = new Vector3 (angleX,angleY,angleZ);
-            RaycastHit hit;
+            // RaycastHit hit;
 
-            if (_playerControl.Player.climb.ReadValue<float>() > 0)
-            {
-                if (Physics.Raycast(transform.position + new Vector3(0f,0.1f,0f), transform.forward, out hit,  2f, layerMsk)){
-                    Debug.Log(hit.collider.tag);
-                    if (hit.collider.tag == "wall"){
-                        if (gonnaGo == false){
-                            gonnaGo = true;
-                            gameObject.GetComponent<Rigidbody>().useGravity = false;
-                            // Debug.Log(gonnaGo);
-                            toJump = new Vector3(mother.transform.position.x - hit.transform.position.x, 0f, mother.transform.position.z - hit.transform.position.z);
-                            // if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit, Mathf.Infinity, layerMsk)){
-                            // mother.transform.Translate(new Vector3(0f,0.01f,0f));
-                            mother.transform.position = Vector3.Lerp(mother.transform.position, mother.transform.position + new Vector3(0f, hit.collider.bounds.size.y + 1f, 0f), 0.5f * Time.deltaTime);
-                            // mother.transform.Translate(new Vector3(0f,1.5f,0f));
-                            gonnaGo = false;
-                            //isclimbing = 1;
-                            // StartCoroutine(Hover());
-                        }
-                        Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
-                    }
-                    // if(hit.transform == null){
-                    //     // toJump = new Vector3(mother.transform.position.x - hit.transform.position.x, 0f, mother.transform.position.z - hit.transform.position.z);
-                    //     Debug.Log(mother.transform.position);
-                    //     mother.transform.Translate(0f, 0f, 2f);
-                    //     gameObject.GetComponent<Rigidbody>().useGravity = true;
-                    // }
-                }else{
-                    gameObject.GetComponent<Rigidbody>().useGravity = true;
-                }
-            }
+            // if (_playerControl.Player.climb.ReadValue<float>() > 0)
+            // {
+            //     if (Physics.Raycast(transform.position + new Vector3(0f,0.1f,0f), transform.forward, out hit,  2f, layerMsk)){
+            //         Debug.Log(hit.collider.tag);
+            //         if (hit.collider.tag == "wall"){
+            //             if (gonnaGo == false){
+            //                 gonnaGo = true;
+            //                 gameObject.GetComponent<Rigidbody>().useGravity = false;
+            //                 // Debug.Log(gonnaGo);
+            //                 toJump = new Vector3(mother.transform.position.x - hit.transform.position.x, 0f, mother.transform.position.z - hit.transform.position.z);
+            //                 // if (Physics.Raycast(transform.position + new Vector3(0f,1f,0f), transform.forward, out hit, Mathf.Infinity, layerMsk)){
+            //                 // mother.transform.Translate(new Vector3(0f,0.01f,0f));
+            //                 mother.transform.position = Vector3.Lerp(mother.transform.position, mother.transform.position + new Vector3(0f, hit.collider.bounds.size.y + 1f, 0f), 0.5f * Time.deltaTime);
+            //                 // mother.transform.Translate(new Vector3(0f,1.5f,0f));
+            //                 gonnaGo = false;
+            //                 //isclimbing = 1;
+            //                 // StartCoroutine(Hover());
+            //             }
+            //             Debug.DrawRay(transform.position + new Vector3(0f,1f,0f),transform.forward,Color.red, 1.0f);
+            //         }
+            //         // if(hit.transform == null){
+            //         //     // toJump = new Vector3(mother.transform.position.x - hit.transform.position.x, 0f, mother.transform.position.z - hit.transform.position.z);
+            //         //     Debug.Log(mother.transform.position);
+            //         //     mother.transform.Translate(0f, 0f, 2f);
+            //         //     gameObject.GetComponent<Rigidbody>().useGravity = true;
+            //         // }
+            //     }else{
+            //         gameObject.GetComponent<Rigidbody>().useGravity = true;
+            //     }
+            // }
             spawn_time -= Time.deltaTime;
             if (spawn_time <= 0) {
                 if(canspawn){
