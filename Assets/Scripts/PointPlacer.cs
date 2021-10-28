@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.EnhancedTouch;
+using touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
+
 [RequireComponent(typeof(ARRaycastManager))]
 public class PointPlacer : MonoBehaviour
 {
@@ -15,20 +18,21 @@ public class PointPlacer : MonoBehaviour
     //public GameObject Butt;
     public GameObject Text1;
     public GameObject Text2;
-    public GameObject button1;
-    public GameObject button2;
-    public GameObject button3;
-    public GameObject button4;
-    public GameObject button5;
-    public GameObject button6;
+    public GameObject joystick;
+    public GameObject jump;
+    public GameObject boost;
+    public GameObject time;
     public bool placedstartpoint = false;
     public bool nextstage = false;
     public bool placedendpoint = false;
+    private bool delay = false;
+    private float timer = 0f;
     private ARRaycastManager arRaycastmng;
     private ARPlaneManager arPlaneManager;
     [SerializeField] public GameObject character;
     [SerializeField] public GameObject objectospawn1;
     [SerializeField] public GameObject objectospawn2;
+    public ARSession arSession;
 
     static List<ARRaycastHit> hits = new List<ARRaycastHit>();
     // Start is called before the first frame update
@@ -36,7 +40,9 @@ public class PointPlacer : MonoBehaviour
     {
         screencontrol = new Screencontrol();
         arRaycastmng = GetComponent<ARRaycastManager>();
-        arPlaneManager = GetComponent<ARPlaneManager>();    
+        arPlaneManager = GetComponent<ARPlaneManager>();
+        EnhancedTouchSupport.Enable();
+        arSession.Reset();
     }
     private void OnEnable() {
         screencontrol.Enable();
@@ -47,7 +53,7 @@ public class PointPlacer : MonoBehaviour
     }
     void Start()
     {
-
+        
     }
     bool gettouchpos(out Vector2 touchposition) {
         if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
@@ -101,12 +107,18 @@ public class PointPlacer : MonoBehaviour
         //         }
         //     }
         // }
-        if (nextstage == false) {
-        if(!gettouchpos(out Vector2 touchposition)) {
-                return;
+        if (placedstartpoint == true) {
+            timer += Time.deltaTime;
+            if (timer > 1.0f) {
+                delay = true;
+            }
         }
-            if(screencontrol.Touch.TouchInput.ReadValue<float>() > 0) {
-                if (arRaycastmng.Raycast(touchposition, hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes)) {
+        if (nextstage == false) {
+            if (touch.activeFingers.Count == 1)
+            {
+            touch activeTouch = touch.activeFingers[0].currentTouch;
+            if(activeTouch.phase == UnityEngine.InputSystem.TouchPhase.Began) {
+                if (arRaycastmng.Raycast(activeTouch.startScreenPosition, hits, UnityEngine.XR.ARSubsystems.TrackableType.Planes)) {
                     var hitpose = hits[0].pose;
                     
                     if (placedstartpoint == false && placedendpoint == false) {
@@ -116,7 +128,8 @@ public class PointPlacer : MonoBehaviour
                        Text2.SetActive(true);
                        x = hitpose.position;
                        y = hitpose.rotation;
-                    } else if(placedstartpoint == true && placedendpoint == false) {
+                       
+                    } else if(placedstartpoint == true && placedendpoint == false && delay == true) {
                         endpoint = Instantiate(objectospawn2, hitpose.position, hitpose.rotation);
                         placedendpoint = true;
                         Text2.SetActive(false);
@@ -126,17 +139,17 @@ public class PointPlacer : MonoBehaviour
                         }
                     }
                 }
+            //Debug.Log($"Phase: {activeTouch.phase} | Position: {activeTouch.startScreenPosition}");
+            }   
             } else if (nextstage == true) {
                 //character = Instantiate(character, x + new Vector3(0f, 0.5f, 0f), y);
                 //GetComponent(PointPlacer).enabled = false;
+                time.SetActive(true);
                 character.SetActive(true);
                 character.transform.SetPositionAndRotation(x + new Vector3(0f, 0.5f, 0f), new Quaternion(0f,0f,0f,0f));
-                button1.SetActive(true);
-                button2.SetActive(true);
-                button3.SetActive(true);
-                button4.SetActive(true);
-                button5.SetActive(true);
-                button6.SetActive(true);
+                joystick.SetActive(true);
+                jump.SetActive(true);
+                boost.SetActive(true);
                 this.enabled = false;
             }
         }

@@ -3,12 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-<<<<<<< Updated upstream
   tags:
   - wall
-=======
-  tags: []
->>>>>>> Stashed changes
+  - timeDisplay
+  - Start
+  - obstacle_col
+  - floortag
   layers:
   - Default
   - TransparentFX
