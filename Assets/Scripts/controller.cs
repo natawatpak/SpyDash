@@ -28,6 +28,7 @@ public class controller : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoint
     // public GameObject mother;
     [SerializeField] private string SceneName;
     private Animator anim;
+    private Vector3 startcoord;
     /////////////////////////////////////////////////////////
 
     void Start()
@@ -36,6 +37,12 @@ public class controller : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoint
         arObject = Character;
         anim = Character.GetComponent<Animator>();
         time = 200f;
+        GameObject temp = GameObject.Find("Point 2");
+        startcoord = new Vector3(temp.transform.position.x, temp.transform.position.y, temp.transform.position.z);
+    }
+
+    public void reset_button() {
+        arObject.transform.position = startcoord;
     }
 
     private void Awake(){
