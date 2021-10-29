@@ -9,7 +9,7 @@ public class Playercontrol : MonoBehaviour
 
     //nene code
     public GameObject obstacle;
-    private float spawn_time = 3;
+    private float spawn_time = 0;
     public Rigidbody rigid;
     public float time;
     public GameObject myself;
@@ -49,51 +49,13 @@ public class Playercontrol : MonoBehaviour
         float xpos = myself.transform.position.x;
         float ypos = myself.transform.position.y;
         float zpos = myself.transform.position.z;
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             float headingto = mother.transform.rotation.eulerAngles.y ;
 
             Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
             Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.3f, 1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.3f, 0.3f)), this.transform.rotation);
             Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.3f, 0.3f)), this.transform.rotation);
             Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-1f, -0.3f)), this.transform.rotation);
-            // for real
-            //Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
-            // for test
-            //Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.5f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
-
-            // if (mother.transform.rotation.eulerAngles.y >  0 && 90 >= mother.transform.rotation.eulerAngles.y){
-            // Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
-            // }else if ( mother.transform.rotation.eulerAngles.y >  90 && 180 >= mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
-            // }else if( mother.transform.rotation.eulerAngles.y <  0 && -90 <= mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
-            // }else if ( mother.transform.rotation.eulerAngles.y <  -90 && -180 < mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
-            // }
-
-
-            // if (mother.transform.rotation.eulerAngles.y >  0 && 90 >= mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
-            // }else if ( mother.transform.rotation.eulerAngles.y >  90 && 180 >= mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.3f),ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
-            // }else if( mother.transform.rotation.eulerAngles.y <  0 && -90 <= mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 0.8f)), this.transform.rotation);
-            // }else if ( mother.transform.rotation.eulerAngles.y <  -90 && -180 < mother.transform.rotation.eulerAngles.y){
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, -0.1f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(-0.8f, -0.3f)), this.transform.rotation);
-            // }else{
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (0.1f, 0.5f), ypos - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
-            // }
-
-
-
-
-
-
-
-            // else {
-            //     Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
-            // }
-            //Instantiate(obstacle, new Vector3(xpos + UnityEngine.Random.Range (-0.3f, 0.3f), plane_ar.transform.position.y - (float)0.52, zpos + UnityEngine.Random.Range(0.3f, 1f)), this.transform.rotation);
         }
     }
 
@@ -103,7 +65,7 @@ public class Playercontrol : MonoBehaviour
         anim = GetComponent<Animator>();
         _controller = GetComponent<CharacterController>();
         audioSource = GetComponent<AudioSource>();
-        time = 200;
+        time = 30;
         audioSource.PlayOneShot(playing_sound, 0.5f);
     }
     IEnumerator Hover()
@@ -263,11 +225,6 @@ public class Playercontrol : MonoBehaviour
                     waiting = false;
                     playervec = new Vector3(0,0,0);
                 }
-            //Falling out of bound respawn function
-            if (mother.transform.position.y <= -5) {
-                mother.transform.SetPositionAndRotation(GameObject.FindGameObjectWithTag("Start").transform.position + new Vector3(0f,0.5f,0f), mother.transform.rotation);
-            }
-
             float angleX = transform.rotation.eulerAngles.x;  
             float angleY = transform.rotation.eulerAngles.y; 
             float angleZ = transform.rotation.eulerAngles.z;
@@ -309,7 +266,7 @@ public class Playercontrol : MonoBehaviour
                 if(canspawn){
                 CreateObs();
                 }
-                spawn_time = 8;
+                spawn_time = 1f;
             }
         }
     }

@@ -197,6 +197,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &751275111329247582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2917568019250351300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f9adb441acf14b59b4976cda94a1bfa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gamePad: {fileID: 0}
+  moveSpeed: 0.0001
+  Character: {fileID: 0}
+  timeDisplay: {fileID: 0}
+  layerMsk:
+    serializedVersion: 2
+    m_Bits: 0
+  gonnaGo: 0
+  SceneName: 
 --- !u!114 &2647027472527492372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +233,8 @@ MonoBehaviour:
   obstacle: {fileID: 0}
   rigid: {fileID: 0}
   time: 0
+  myself: {fileID: 0}
+  canspawn: 1
   layerMsk:
     serializedVersion: 2
     m_Bits: 8
@@ -223,31 +246,10 @@ MonoBehaviour:
   turnSpd: 180
   grounded: 0
   SceneName: 
+  plane_ar: {fileID: 0}
   mother: {fileID: 2647027472175093342}
   timeDisplay: {fileID: 0}
   gonnaGo: 0
---- !u!114 &751275111329247582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2917568019250351300}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f9adb441acf14b59b4976cda94a1bfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gamePad: {fileID: 0}
-  moveSpeed: 0.5
-  Character: {fileID: 0}
-  time: 2000
-  timeDisplay: {fileID: 0}
-  layerMsk:
-    serializedVersion: 2
-    m_Bits: 0
-  gonnaGo: 0
-  SceneName: 
 --- !u!1001 &2647027472607490453
 PrefabInstance:
   m_ObjectHideFlags: 0

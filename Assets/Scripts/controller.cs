@@ -10,12 +10,12 @@ public class controller : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoint
 {
 
     public RectTransform gamePad;
-    public float moveSpeed = 0.5f;
+    public float moveSpeed = 0.0001f;
     public GameObject Character;
 
     GameObject arObject;
     Vector3 move;
-    public float time;
+    //public float time;
     public Text timeDisplay;
 
     bool walking;
@@ -36,7 +36,7 @@ public class controller : MonoBehaviour, IDragHandler, IPointerUpHandler, IPoint
         //arObject = GameObject.FindGameObjectWithTag("Player");
         arObject = Character;
         anim = Character.GetComponent<Animator>();
-        time = 200f;
+        //time = 30f;
         GameObject temp = GameObject.Find("Point 2");
         startcoord = new Vector3(temp.transform.position.x, temp.transform.position.y, temp.transform.position.z);
     }
